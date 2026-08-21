@@ -1,0 +1,34 @@
+# Smithery configuration for WHOOP
+# Schema: https://smithery.ai/docs/build/project-config
+# Remote HTTP MCP — server hosted at https://api.mcp.ai/p_whoop
+
+name: whoop-mcp
+displayName: "WHOOP"
+description: >
+  Seus dados WHOOP no assistente, somente leitura: recovery, sono, strain, workouts, ciclos e medidas corporais via API oficial v2 (OAuth 2.0). A plataforma fornece a aplicação OAuth, você só clica em Autorizar e loga com sua conta WHOOP, sem informar senha ao assistente. Dados de wearable não substituem avaliação médica.
+
+version: 0.1.0
+license: MIT
+homepage: https://github.com/mcp-dir/whoop-mcp
+repository: https://github.com/mcp-dir/whoop-mcp
+
+tags:
+  - whoop
+  - brazil
+  - med
+  - vertical
+  - read-only
+
+# Remote HTTP MCP — sem startCommand local (servidor já hospedado)
+startCommand:
+  type: http
+  url: https://api.mcp.ai/p_whoop
+
+auth:
+  type: oauth2
+  resourceMetadataUrl: https://api.mcp.ai/p_whoop/.well-known/oauth-protected-resource
+  fallback:
+    type: agent-auth
+    description: >
+      Para clientes sem OAuth 2.1. O agente expõe uma tool authenticate(token).
+      Usuário gera o JWT em https://app.mcp.ai/agent-auth e cola no chat.
